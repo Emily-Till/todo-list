@@ -39,14 +39,14 @@ const App = () => {
     const newListItems = [...selectedList.items]
     newListItems.splice(index, 1, newListItem)
 
-    updateListItems(newListItems)
+    updateList({ items: newListItems })
   }
 
-  function updateListItems(newListItems) {
+  function updateList(newList) {
     const newLists = [...lists]
     newLists.splice(selectedListIndex, 1, {
       ...selectedList,
-      items: newListItems,
+      ...newList,
     })
 
     setLists(newLists)
@@ -64,6 +64,17 @@ const App = () => {
       </div>
       <div className="App__list-wrapper">
         <List
+          listName={selectedList.link.name}
+          onListNameUpdate={(event) => {
+            const value = event.currentTarget.value
+
+            updateList({
+              link: {
+                ...selectedList.link,
+                name: value,
+              },
+            })
+          }}
           items={selectedList.items}
           onItemSelected={(index) => {
             const newListItem = {
@@ -90,7 +101,7 @@ const App = () => {
             newListItems.splice(itemIndex, 1)
             newListItems.splice(index, 0, item)
 
-            updateListItems(newListItems)
+            updateList({ items: newListItems })
           }}
         />
       </div>
