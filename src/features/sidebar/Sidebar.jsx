@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Nav } from '@fluentui/react'
 
 const ADD_NEW_LIST_KEY = 'addLink'

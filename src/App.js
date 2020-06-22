@@ -4,8 +4,8 @@ import Sidebar from './features/sidebar/Sidebar'
 import List from './features/list/List'
 import './App.css'
 
-const createListItem = () => ({
-  content: 'asdasdas',
+const createListItem = (content = '') => ({
+  content,
   completed: false,
   key: String(Math.random()),
 })
@@ -18,8 +18,21 @@ const createNewListItem = (name) => ({
   items: [createListItem(), createListItem()],
 })
 
+const SHOPPING_LIST = createNewListItem('Groceries')
+SHOPPING_LIST.items = [
+  createListItem('Ketchup'),
+  createListItem('Encona'),
+  createListItem('Peas'),
+  createListItem('Garlic'),
+  createListItem('Peanut butter'),
+  createListItem('Jam'),
+  createListItem('Maggi sauce bags'),
+  createListItem('Instant noodles'),
+  createListItem('Lanzhou noodles'),
+]
+
 const App = () => {
-  const [lists, setLists] = useState([createNewListItem('Todo')])
+  const [lists, setLists] = useState([SHOPPING_LIST])
   const [selectedListIndex, setSelectedListIndex] = useState(0)
   const selectedList = lists[selectedListIndex]
 
