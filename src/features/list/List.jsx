@@ -1,5 +1,5 @@
 import React from 'react'
-import { Toggle } from '@fluentui/react'
+import { Toggle, ActionButton } from '@fluentui/react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 import './List.css'
@@ -11,6 +11,7 @@ const List = ({
   onItemDrop,
   onItemSelected,
   onItemUpdate,
+  onNewTask,
 }) => {
   return (
     <>
@@ -36,16 +37,12 @@ const List = ({
               />
               {items.map((item, index) => (
                 <Draggable key={item.key} draggableId={item.key} index={index}>
-                  {(provided, snapshot) => (
+                  {(provided) => (
                     <div
                       className="List__item"
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      // style={getItemStyle(
-                      //   snapshot.isDragging,
-                      //   provided.draggableProps.style,
-                      // )}
                     >
                       <Toggle
                         className="List__item-toggle"
@@ -64,6 +61,12 @@ const List = ({
                 </Draggable>
               ))}
               {provided.placeholder}
+              <div className="List__action-button-wrapper">
+                <ActionButton className="List__action-button" onClick={onNewTask}>
+                  Add a task. Don't type @ to assign it to someone, that won't
+                  work.
+                </ActionButton>
+              </div>
             </div>
           )}
         </Droppable>

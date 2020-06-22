@@ -103,6 +103,9 @@ const App = () => {
 
             updateList({ items: newListItems })
           }}
+          onNewTask={() => {
+            updateList({ items: [...selectedList.items, createListItem()] })
+          }}
         />
       </div>
     </main>
