@@ -23,7 +23,7 @@ const App = () => {
   const [selectedListIndex, setSelectedListIndex] = useState(0)
   const selectedList = lists[selectedListIndex]
 
-  function onListSelect(key) {
+  const onListSelect = (key) => {
     const newSelectedListItemIndex = lists.findIndex(
       ({ link }) => link.key === key,
     )
@@ -31,18 +31,18 @@ const App = () => {
     setSelectedListIndex(newSelectedListItemIndex)
   }
 
-  function onCreateNewList() {
+  const onCreateNewList = () => {
     setLists([...lists, createNewListItem('New todo list')])
   }
 
-  function updateListItem(index, newListItem) {
+  const updateListItem = (index, newListItem) => {
     const newListItems = [...selectedList.items]
     newListItems.splice(index, 1, newListItem)
 
     updateList({ items: newListItems })
   }
 
-  function updateList(newList) {
+  const updateList = (newList) => {
     const newLists = [...lists]
     newLists.splice(selectedListIndex, 1, {
       ...selectedList,
@@ -50,6 +50,58 @@ const App = () => {
     })
 
     setLists(newLists)
+  }
+
+  const onListNameUpdate = (event) => {
+    const value = event.currentTarget.value
+
+    updateList({
+      link: {
+        ...selectedList.link,
+        name: value,
+      },
+    })
+  }
+
+  const onItemSelected = (index) => {
+    const newListItem = {
+      ...selectedList.items[index],
+      completed: true,
+    }
+
+    updateListItem(index, newListItem)
+  }
+
+  const onItemUpdate = (index, event) => {
+    const value = event.currentTarget.value
+    const newListItem = {
+      ...selectedList.items[index],
+      content: value,
+    }
+
+    updateListItem(index, newListItem)
+  }
+
+  const onItemDrop = (index, key) => {
+    const item = selectedList.items.find((item) => item.key === key)
+    const itemIndex = selectedList.items.indexOf(item)
+
+    const newListItems = [...selectedList.items]
+    newListItems.splice(itemIndex, 1)
+    newListItems.splice(index, 0, item)
+
+    updateList({ items: newListItems })
+  }
+
+  const onNewTask = () => {
+    updateList({ items: [...selectedList.items, createListItem()] })
+  }
+
+  const onDeleteTask = (index) => {
+    const newListItems = [...selectedList.items]
+    newListItems.splice(index, 1)
+
+    updateList({ items: newListItems })
   }
 
   return (
@@ -65,53 +117,13 @@ const App = () => {
       <div className="App__list-wrapper">
         <List
           listName={selectedList.link.name}
-          onListNameUpdate={(event) => {
-            const value = event.currentTarget.value
-
-            updateList({
-              link: {
-                ...selectedList.link,
-                name: value,
-              },
-            })
-          }}
           items={selectedList.items}
-          onItemSelected={(index) => {
-            const newListItem = {
-              ...selectedList.items[index],
-              completed: true,
-            }
-
-            updateListItem(index, newListItem)
-          }}
-          onItemUpdate={(index, event) => {
-            const value = event.currentTarget.value
-            const newListItem = {
-              ...selectedList.items[index],
-              content: value,
-            }
-
-            updateListItem(index, newListItem)
-          }}
-          onItemDrop={(index, key) => {
-            const item = selectedList.items.find((item) => item.key === key)
-            const itemIndex = selectedList.items.indexOf(item)
-
-            const newListItems = [...selectedList.items]
-            newListItems.splice(itemIndex, 1)
-            newListItems.splice(index, 0, item)
-
-            updateList({ items: newListItems })
-          }}
-          onNewTask={() => {
-            updateList({ items: [...selectedList.items, createListItem()] })
-          }}
-          onDeleteTask={(index) => {
-            const newListItems = [...selectedList.items]
-            newListItems.splice(index, 1)
-
-            updateList({ items: newListItems })
-          }}
+          onListNameUpdate={onListNameUpdate}
+          onItemSelected={onItemSelected}
+          onItemUpdate={onItemUpdate}
+          onItemDrop={onItemDrop}
+          onNewTask={onNewTask}
+          onDeleteTask={onDeleteTask}
         />
       </div>
     </main>
