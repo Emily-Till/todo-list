@@ -9,6 +9,11 @@ const Sidebar = ({
   onListSelect,
   selectedListItem,
 }) => {
+  const listItems = lists.map(({ link, items }) => ({
+    ...link,
+    name: `${link.name} - ${items.length}`,
+  }))
+
   function onLinkClick(_event, { key }) {
     if (key === ADD_NEW_LIST_KEY) {
       onCreateNewList()
@@ -24,7 +29,7 @@ const Sidebar = ({
       groups={[
         {
           links: [
-            ...lists,
+            ...listItems,
             {
               icon: 'Add',
               name: 'Add new list',

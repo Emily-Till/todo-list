@@ -56,7 +56,7 @@ const App = () => {
     <main className="App">
       <div className="App__sidebar-wrapper">
         <Sidebar
-          lists={lists.map(({ link }) => link)}
+          lists={lists}
           selectedListItem={selectedList.link.key}
           onCreateNewList={onCreateNewList}
           onListSelect={onListSelect}
