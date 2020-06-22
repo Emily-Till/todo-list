@@ -15,7 +15,7 @@ const createNewListItem = (name) => ({
     name,
     key: name + Math.random(),
   },
-  items: [createListItem(), createListItem()],
+  items: [createListItem()],
 })
 
 const SHOPPING_LIST = createNewListItem('Groceries')
