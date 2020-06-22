@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
 
-function App() {
+import Sidebar from './features/sidebar/Sidebar'
+import './App.css'
+
+const createNewListItem = (name) => ({
+  link: {
+    name,
+    key: name,
+  },
+  items: [],
+})
+
+const App = () => {
+  const [selectedItemIndex, setSelectedItemIndex] = useState(0)
+  const [lists, setLists] = useState([createNewListItem('Todo')])
+  const selectedListItem = lists[selectedItemIndex].link.key
+
+  function onListSelect(key) {
+    const selectedListItemIndex = lists.indexOf((list) => list.link.key === key)
+    setSelectedItemIndex(selectedListItemIndex)
+  }
+
+  function onCreateNewList() {
+    setLists([...lists, createNewListItem('New todo list')])
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <main className="App">
+      <Sidebar
+        lists={lists.map(({ link }) => link)}
+        selectedListItem={selectedListItem}
+        onCreateNewList={onCreateNewList}
+        onListSelect={onListSelect}
+      />
+    </main>
+  )
 }
 
-export default App;
+export default App
