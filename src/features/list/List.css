@@ -62,3 +62,13 @@
 .List__action-button {
   color: #fafafa;
 }
+
+.List__action-button-icon {
+  margin: 0 1.2rem 0 0;
+}
+
+@media (min-width: 1439px) {
+  .List {
+    margin-right: 30%;
+  }
+}

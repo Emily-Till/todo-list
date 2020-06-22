@@ -1,5 +1,5 @@
 import React from 'react'
-import { Toggle, ActionButton } from '@fluentui/react'
+import { Toggle, ActionButton, IconButton, Icon } from '@fluentui/react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 import './List.css'
@@ -12,6 +12,7 @@ const List = ({
   onItemSelected,
   onItemUpdate,
   onNewTask,
+  onDeleteTask,
 }) => {
   return (
     <>
@@ -56,13 +57,22 @@ const List = ({
                         value={item.content}
                         onChange={(event) => onItemUpdate(index, event)}
                       />
+                      <IconButton
+                        iconProps={{ iconName: 'Delete' }}
+                        ariaLabel="Delete item"
+                        onClick={() => onDeleteTask(index)}
+                      />
                     </div>
                   )}
                 </Draggable>
               ))}
               {provided.placeholder}
               <div className="List__action-button-wrapper">
-                <ActionButton className="List__action-button" onClick={onNewTask}>
+                <ActionButton
+                  className="List__action-button"
+                  onClick={onNewTask}
+                >
+                  <Icon iconName="Add" className="List__action-button-icon" />
                   Add a task. Don't type @ to assign it to someone, that won't
                   work.
                 </ActionButton>

@@ -106,6 +106,12 @@ const App = () => {
           onNewTask={() => {
             updateList({ items: [...selectedList.items, createListItem()] })
           }}
+          onDeleteTask={(index) => {
+            const newListItems = [...selectedList.items]
+            newListItems.splice(index, 1)
+
+            updateList({ items: newListItems })
+          }}
         />
       </div>
     </main>
